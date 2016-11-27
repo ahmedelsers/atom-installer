@@ -82,10 +82,12 @@ def get_atom_install(linux_distro, atom_link):
     if linux_distro == 'fedora':
         subprocess.run(['wget', 'c', atom_link, '-O', os.path.join('/tmp/', os.path.basename(atom_link))])
         subprocess.run(['sudo', 'rpm', '-iUvh', os.path.join('/tmp/', os.path.basename(atom_link))])
+        print("Thank You for using my Script.")
 
     if linux_distro == 'ubuntu':
         subprocess.run(['wget', 'c', atom_link, '-O', os.path.join('/tmp/', os.path.basename(atom_link))])
         subprocess.run(['sudo', 'dpkg', '-i', os.path.join('/tmp/', os.path.basename(atom_link))])
+        print("Thank You for using my Script.")
 
 
 def main():
@@ -102,6 +104,7 @@ def main():
             get_atom_install(linux_distro, atom_link_pkgver_latest[0])
         if atom_link_pkgver_latest[1] == is_atom_installed[1]:
             print("You already have atom latest installed, Good for You.")
+            print("Thank You for using my Script.")
             sys.exit(0)
     else:
         get_atom_install(linux_distro, atom_link_pkgver_latest[0])
