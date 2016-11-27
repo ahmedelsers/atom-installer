@@ -81,7 +81,7 @@ def atom_installed(linux_distro):
 def get_atom_install(linux_distro, atom_link):
     if linux_distro == 'fedora':
         subprocess.run(['wget', 'c', atom_link, '-O', os.path.join('/tmp/', os.path.basename(atom_link))])
-        subprocess.run(['sudo', 'rpm', '-iUvh', os.path.join('/tmp/', os.path.basename(atom_link))])
+        subprocess.run(['sudo', 'dnf', 'install', os.path.join('/tmp/', os.path.basename(atom_link))])
         print("Thank You for using my Script.")
 
     if linux_distro == 'ubuntu':
