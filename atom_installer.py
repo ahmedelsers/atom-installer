@@ -28,7 +28,7 @@ def check_linux_distro():
     if platform.architecture()[0] == '64bit':
         if 'fedora' in (platform.platform()).lower():
             linux_distro = 'fedora'
-        if 'ubuntu' in (platform.platform()).lower():
+        if 'ubuntu' or 'debian' in (platform.platform()).lower():
             linux_distro = 'ubuntu'
         return linux_distro
     else:
