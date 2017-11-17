@@ -80,7 +80,7 @@ def atom_installed(linux_distro):
 def get_atom_install(linux_distro, atom_link):
     if linux_distro == 'fedora':
         subprocess.run(['wget', '-c', atom_link, '-O', os.path.join('/tmp/', os.path.basename(atom_link))])
-        subprocess.run(['sudo', 'dnf', 'install', os.path.join('/tmp/', os.path.basename(atom_link))])
+        subprocess.run(['sudo', 'dnf', '-y', 'install', os.path.join('/tmp/', os.path.basename(atom_link))])
         print("Thank You for using my Script.")
 
     if linux_distro == 'ubuntu':
@@ -90,23 +90,26 @@ def get_atom_install(linux_distro, atom_link):
 
 
 def main():
-    atom_base_url = 'https://github.com'
-    atom_latest_url = 'https://github.com/atom/atom/releases/latest'
+    try:
+        atom_base_url = 'https://github.com'
+        atom_latest_url = 'https://github.com/atom/atom/releases/latest'
 
-    linux_distro = check_linux_distro()
-    atom_link_pkgver_latest = atom_latest(
-        atom_base_url, atom_latest_url, linux_distro)
-    is_atom_installed = atom_installed(linux_distro)
+        linux_distro = check_linux_distro()
+        atom_link_pkgver_latest = atom_latest(atom_base_url, atom_latest_url, linux_distro)
+        is_atom_installed = atom_installed(linux_distro)
 
-    if is_atom_installed[0]:
-        if atom_link_pkgver_latest[1] > is_atom_installed[1]:
+        if is_atom_installed[0]:
+            if atom_link_pkgver_latest[1] > is_atom_installed[1]:
+                get_atom_install(linux_distro, atom_link_pkgver_latest[0])
+            if atom_link_pkgver_latest[1] == is_atom_installed[1]:
+                print("You already have atom latest installed, Good for You.")
+                print("Thank You for using my Script.")
+                sys.exit(0)
+        else:
             get_atom_install(linux_distro, atom_link_pkgver_latest[0])
-        if atom_link_pkgver_latest[1] == is_atom_installed[1]:
-            print("You already have atom latest installed, Good for You.")
-            print("Thank You for using my Script.")
-            sys.exit(0)
-    else:
-        get_atom_install(linux_distro, atom_link_pkgver_latest[0])
+    except KeyboardInterrupt:
+        print("\nIt seems you entered Ctl-C, run the script again when you ready.")
+        print("Thank You anyway.")
 
 
 if __name__ == '__main__':
